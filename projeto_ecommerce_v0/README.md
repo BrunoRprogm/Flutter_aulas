@@ -1,4 +1,4 @@
-# projeto_ecommerce_v0
+# more_devs_do_zero
 
 A new Flutter project.
 

@@ -1,34 +1,52 @@
 import 'package:flutter/material.dart';
-import 'package:projeto_ecommerce_v0/shared/app_colors.dart';
-import 'package:projeto_ecommerce_v0/shared/app_text_style.dart';
+import 'package:more_devs_do_zero/shared/app_colors.dart';
+import 'package:more_devs_do_zero/shared/app_text_style.dart';
+
+enum ButtonType { filled, outlined }
 
 class AppElevatedButton extends StatelessWidget {
   const AppElevatedButton({
     super.key,
-    required this.textButton,
-    required this.darkBackground,
-    required this.typeColorLetras,
+    required this.onPressed,
+    required this.buttonText,
+    required this.type,
   });
 
-  final String textButton;
-  final bool darkBackground;
-  final bool typeColorLetras;
-  //FALTA AJUSTAR O REDICIRECIONAMENTO DO MÉTODO PARA CADA TIPO DE BOTÃO
+  final VoidCallback onPressed;
+  final ButtonType type;
+  final String buttonText;
+
+  ButtonStyle _getStyle() {
+    switch (type) {
+      case ButtonType.filled:
+        return ElevatedButton.styleFrom(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+          backgroundColor: AppColors.black,
+          foregroundColor: AppColors.white,
+          textStyle: AppTextStyle.buttonLabel,
+          minimumSize: Size.fromHeight(40),
+        );
+      case ButtonType.outlined:
+        return ElevatedButton.styleFrom(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+          backgroundColor: AppColors.white,
+          foregroundColor: AppColors.black,
+          textStyle: AppTextStyle.buttonLabel,
+          minimumSize: Size.fromHeight(40),
+        );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed: () {},
-
-      style: ElevatedButton.styleFrom(
-        minimumSize: Size.fromHeight(40),
-        foregroundColor: (darkBackground ? AppColors.white : AppColors.black),
-        backgroundColor: (typeColorLetras ? AppColors.black : AppColors.white),
-        textStyle: AppTextStyle.buttonLabel,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadiusGeometry.all(Radius.circular(12)),
-        ),
-      ),
-      child: Text(textButton),
+      onPressed: onPressed,
+      style: _getStyle(),
+      child: Text(buttonText),
     );
   }
 }

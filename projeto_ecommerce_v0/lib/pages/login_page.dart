@@ -1,47 +1,56 @@
 import 'package:flutter/material.dart';
-import 'package:projeto_ecommerce_v0/shared/app_text_style.dart';
-import 'package:projeto_ecommerce_v0/shared/widgets/app_elevated_button.dart';
-import 'package:projeto_ecommerce_v0/shared/widgets/app_text_field.dart';
+import 'package:more_devs_do_zero/pages/signup_page.dart';
+import 'package:more_devs_do_zero/shared/app_text_style.dart';
+import 'package:more_devs_do_zero/shared/widgets/app_elevated_button.dart';
+import 'package:more_devs_do_zero/shared/widgets/app_text_field.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
 
+  static String route = '/login';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //SafeAre desconto os compoonentes nativos do celular, tipo bateria hora
-      //e sinal do wifi, ex: evita que o devsecomm fique do lado do hórario do celuar.
+      // SafeArea desconta espaços do dispositivo (ex.: barra superior)
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24),
+          padding: EdgeInsetsGeometry.symmetric(horizontal: 24),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Spacer(),
-              Text('+DevsEcomm', style: AppTextStyle.tittle),
+              Text('+DevsEcomm', style: AppTextStyle.title),
               Spacer(flex: 2),
               AppTextField(hintText: 'email@dominio.com'),
-              AppTextField(hintText: '***************'),
-              TextButton(
-                onPressed: () => {},
-                child: Text('Esqueci minha senha'),
+              AppTextField(hintText: '**********'),
+              Row(
+                children: [
+                  Spacer(),
+                  TextButton(
+                    onPressed: () => {},
+                    child: Text('Esqueci minha senha'),
+                  ),
+                ],
               ),
               AppElevatedButton(
-                typeColorLetras: true,
-                darkBackground: true,
-                textButton: 'Entrar',
+                type: ButtonType.filled,
+                onPressed: () {},
+                buttonText: 'Entrar',
               ),
-              ElevatedButton(onPressed: () {}, child: Text('Cadastrar-se')),
-              Spacer(flex: 2),
-
-              //Adiciona interação em qualquer objeto
-              GestureDetector(
-                onTap: () {
-                  print('Cliquei na linha1');
+              AppElevatedButton(
+                type: ButtonType.outlined,
+                onPressed: () {
+                  //navegação para a página de cadastro
+                  Navigator.pushNamed(context, SignupPage.route);
                 },
-                //RichText, serve para escrevermos uma porrada de texto,
-                //permitindo que voce possa personalizar caa um da sua maneira.
+                buttonText: 'Cadastrar-se',
+              ),
+              Spacer(flex: 2),
+              GestureDetector(
+                onTap: () => {print('Cliquei na linha')},
+                // RichText: Aninhar textos e e modificar seu style
                 child: RichText(
                   textAlign: TextAlign.center,
                   text: TextSpan(
@@ -51,11 +60,11 @@ class LoginPage extends StatelessWidget {
                         style: TextStyle(color: Colors.black),
                       ),
                       TextSpan(
-                        text: ' e',
+                        text: ' e ',
                         style: TextStyle(color: Colors.grey),
                       ),
                       TextSpan(
-                        text: ' Políticas de Privacidade',
+                        text: 'Política de Privacidade',
                         style: TextStyle(color: Colors.black),
                       ),
                     ],

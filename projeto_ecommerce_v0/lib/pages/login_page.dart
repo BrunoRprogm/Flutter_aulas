@@ -17,14 +17,16 @@ class LoginPage extends StatelessWidget {
         child: Padding(
           padding: EdgeInsetsGeometry.symmetric(horizontal: 24),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
+            spacing: 8,
+            //mainAxisAlignment: MainAxisAlignment.center,
+            // crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Spacer(),
+              Image.asset('assets/images/locker.png', width: 125, height: 125),
               Text('+DevsEcomm', style: AppTextStyle.title),
               Spacer(flex: 2),
-              AppTextField(hintText: 'email@dominio.com'),
-              AppTextField(hintText: '**********'),
+              AppTextField(hintText: 'email@dominio.com', obscureText: false),
+              AppTextField(hintText: '**********', obscureText: true),
               Row(
                 children: [
                   Spacer(),

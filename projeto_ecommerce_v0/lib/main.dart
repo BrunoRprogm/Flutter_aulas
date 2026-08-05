@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:more_devs_do_zero/pages/login_page.dart';
-import 'package:more_devs_do_zero/pages/signup_page.dart';
 import 'package:more_devs_do_zero/routes.dart';
 
 void main() {

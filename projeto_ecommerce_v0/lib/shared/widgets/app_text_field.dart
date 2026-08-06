@@ -6,10 +6,12 @@ class AppTextField extends StatefulWidget {
     super.key,
     required this.hintText,
     this.obscureText = false,
+    this.onChanged,
   });
 
   final String hintText;
   final bool obscureText;
+  final Function(String)? onChanged;
 
   @override
   State<AppTextField> createState() => _AppTextFieldState();
@@ -36,6 +38,7 @@ class _AppTextFieldState extends State<AppTextField> {
   @override
   Widget build(BuildContext context) {
     return TextField(
+      onChanged: widget.onChanged,
       obscureText: isObscure,
       decoration: InputDecoration(
         suffixIcon: widget.obscureText

@@ -98,10 +98,10 @@ class _SignupPageState extends State<SignupPage> {
                   children: [
                     Checkbox(
                       value: isActiveCheckbox,
-                      onChanged: (value) => {
+                      onChanged: (value) {
                         setState(() {
-                          isActiveCheckbox = value!;
-                        }),
+                          isActiveCheckbox = !isActiveCheckbox;
+                        });
                       },
                     ),
                     RichText(

@@ -5,6 +5,38 @@ class singUpController {
   String confirmarSenha = '';
   bool isActiveCheckbox = false;
   bool isActiveButton = false;
+  bool isValidPassword = false;
+
+  final RegExp specialCaracterPassword = RegExp(
+    r'^(?=.*[!@#$%^&*(),.?":{}|<>_\-+=]).*$',
+  );
+  final RegExp miniumCaracterMaisculo = RegExp(r'[A-Z]');
+  final RegExp miniumCaracterMinusculo = RegExp(r'[a-z]');
+  final RegExp emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+
+  bool isEmailValid() {
+    return emailRegex.hasMatch(email.trim());
+  }
+
+  bool validacaoTamanhoSenha() {
+    return senha.length >= 6;
+  }
+
+  bool validacaoCaracterEspecial() {
+    return specialCaracterPassword.hasMatch(senha);
+  }
+
+  bool validacaoMinimoLetraMaiscula() {
+    return miniumCaracterMaisculo.hasMatch(senha);
+  }
+
+  bool validacaoMinimoLetraMinusculo() {
+    return miniumCaracterMinusculo.hasMatch(senha);
+  }
+
+  bool senhasConcidem() {
+    return senha.isNotEmpty && senha == confirmarSenha;
+  }
 
   void updateEmail(String value) {
     email = value;
@@ -33,10 +65,11 @@ class singUpController {
 
   void changeActivateButton() {
     isActiveButton =
-        email.trim().isNotEmpty &&
-        nome.trim().isNotEmpty &&
-        senha.trim().isNotEmpty &&
-        confirmarSenha.trim().isNotEmpty &&
+        senhasConcidem() &&
+        validacaoTamanhoSenha() &&
+        validacaoCaracterEspecial() &&
+        validacaoMinimoLetraMaiscula() &&
+        validacaoMinimoLetraMinusculo() &&
         isActiveCheckbox;
   }
 }

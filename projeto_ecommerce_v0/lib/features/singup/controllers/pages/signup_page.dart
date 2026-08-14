@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:more_devs_do_zero/features/singup/controllers/sing_up_controller.dart';
 import 'package:more_devs_do_zero/shared/app_text_style.dart';
 import 'package:more_devs_do_zero/shared/widgets/app_elevated_button.dart';
+import 'package:more_devs_do_zero/shared/widgets/app_password_requirement.dart';
 import 'package:more_devs_do_zero/shared/widgets/app_text_field.dart';
 
 class SignupPage extends StatefulWidget {
@@ -53,7 +54,7 @@ class _SignupPageState extends State<SignupPage> {
                 },
               ),
               AppTextField(
-                hintText: 'nome',
+                hintText: 'nom1e',
                 onChanged: (value) {
                   setState(() {
                     singupcontroller.nome = value;
@@ -76,7 +77,27 @@ class _SignupPageState extends State<SignupPage> {
                   });
                 },
               ),
-              Spacer(),
+
+              AppPasswordRequirement(
+                label: 'Mínimo de 6 caracteres',
+                isValid: singupcontroller.validacaoTamanhoSenha(),
+              ),
+              AppPasswordRequirement(
+                label: 'No mínimo um caracteres especial',
+                isValid: singupcontroller.validacaoCaracterEspecial(),
+              ),
+              AppPasswordRequirement(
+                label: 'No mínimo uma letra maiuscula',
+                isValid: singupcontroller.validacaoMinimoLetraMaiscula(),
+              ),
+              AppPasswordRequirement(
+                label: 'No mínimo uma letra minusculas',
+                isValid: singupcontroller.validacaoMinimoLetraMinusculo(),
+              ),
+              AppPasswordRequirement(
+                label: 'As senhas concidem',
+                isValid: singupcontroller.senhasConcidem(),
+              ),
 
               GestureDetector(
                 onTap: () => print(

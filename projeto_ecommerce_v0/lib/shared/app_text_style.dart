@@ -30,4 +30,16 @@ class AppTextStyle {
     fontSize: 14,
     fontWeight: FontWeight.w400,
   );
+
+  static const TextStyle passwordNotValidated = TextStyle(
+    color: AppColors.black,
+    fontSize: 14,
+    fontWeight: FontWeight.w400,
+  );
+
+  static const TextStyle passwordValidated = TextStyle(
+    color: AppColors.green,
+    fontSize: 14,
+    fontWeight: FontWeight.w400,
+  );
 }

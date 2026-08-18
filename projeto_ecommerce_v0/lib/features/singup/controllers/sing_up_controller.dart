@@ -72,4 +72,13 @@ class singUpController {
         validacaoMinimoLetraMinusculo() &&
         isActiveCheckbox;
   }
+
+  List<Map<String, bool>> getPasswordRequirements() {
+    return [
+      {'Tamanho mínimo de 6 caracteres': validacaoTamanhoSenha()},
+      {'Pelo menos um caractere especial': validacaoCaracterEspecial()},
+      {'Pelo menos uma letra maiúscula': validacaoMinimoLetraMaiscula()},
+      {'Pelo menos uma letra minúscula': validacaoMinimoLetraMinusculo()},
+    ];
+  }
 }

@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:more_devs_do_zero/features/login/controllers/login_controller.dart';
+import 'package:more_devs_do_zero/features/recover/pages/recover_page.dart';
 import 'package:more_devs_do_zero/features/singup/controllers/pages/signup_page.dart';
 import 'package:more_devs_do_zero/shared/app_text_style.dart';
 import 'package:more_devs_do_zero/shared/widgets/app_check_box.dart';
@@ -21,6 +22,18 @@ class _LoginPageState extends State<LoginPage> {
   @override
   initState() {
     super.initState();
+  }
+
+  Future<void> login() async {
+    setState(() {
+      loginController.isLoading = true;
+    });
+
+    await loginController.login();
+
+    setState(() {
+      loginController.isLoading = false;
+    });
   }
 
   LoginController loginController = LoginController();
@@ -83,7 +96,10 @@ class _LoginPageState extends State<LoginPage> {
                   Align(
                     alignment: AlignmentGeometry.centerRight,
                     child: TextButton(
-                      onPressed: () => {},
+                      onPressed: () => {
+                        //Basicamente estou dizendo que quando meu usuário clickar em esqueci minha senha ele será direcionado a outra tela
+                        Navigator.pushNamed(context, RecoverPage.route),
+                      },
                       child: Text(
                         'Esqueci minha senha',
                         style: AppTextStyle.buttonLabel.copyWith(
@@ -93,9 +109,10 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                   AppElevatedButton(
+                    isLoading: loginController.isLoading,
                     buttonText: 'Entrar',
                     onPressed: loginController.isActiveButton
-                        ? () => print('cliquei em entrar')
+                        ? () => login()
                         : null,
                     type: ButtonType.filled,
                   ),

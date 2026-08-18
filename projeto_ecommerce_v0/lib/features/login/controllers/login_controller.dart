@@ -6,6 +6,8 @@ class LoginController {
   bool isActiveCheckbox = false;
   bool isActiveButton = false;
 
+  bool isLoading = false;
+
   bool get isEmailValid => _emailRegex.hasMatch(email.trim());
   bool get isSenhaValid => _senhaRegex.hasMatch(senha.trim());
 
@@ -41,5 +43,11 @@ class LoginController {
 
   void changeAtivateCheckBox() {
     isActiveCheckbox = !isActiveCheckbox;
+  }
+
+  Future<void> login() async {
+    //simula o delay de uma chamada dA API
+    await Future.delayed(Duration(seconds: 2));
+    print("agora executou os dois segundos depois");
   }
 }

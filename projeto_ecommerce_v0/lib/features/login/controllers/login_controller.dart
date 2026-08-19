@@ -5,7 +5,6 @@ class LoginController {
   String senha = '';
   bool isActiveCheckbox = false;
   bool isActiveButton = false;
-
   bool isLoading = false;
 
   bool get isEmailValid => _emailRegex.hasMatch(email.trim());

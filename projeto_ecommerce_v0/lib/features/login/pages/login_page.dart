@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:more_devs_do_zero/features/login/controllers/login_controller.dart';
 import 'package:more_devs_do_zero/features/recover/pages/recover_page.dart';
-import 'package:more_devs_do_zero/features/singup/controllers/pages/signup_page.dart';
+import 'package:more_devs_do_zero/features/singup/pages/signup_page.dart';
 import 'package:more_devs_do_zero/shared/app_text_style.dart';
 import 'package:more_devs_do_zero/shared/widgets/app_check_box.dart';
 import 'package:more_devs_do_zero/shared/widgets/app_elevated_button.dart';

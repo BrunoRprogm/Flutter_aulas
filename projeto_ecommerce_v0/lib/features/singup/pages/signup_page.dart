@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:more_devs_do_zero/features/login/controllers/login_controller.dart';
 import 'package:more_devs_do_zero/features/singup/controllers/sing_up_controller.dart';
 import 'package:more_devs_do_zero/shared/app_text_style.dart';
 import 'package:more_devs_do_zero/shared/widgets/app_elevated_button.dart';
@@ -21,6 +22,20 @@ class _SignupPageState extends State<SignupPage> {
   @override
   void initState() {
     super.initState();
+  }
+
+  Future<void> singup() async {
+    setState(() {
+      singupcontroller.isLoading = true;
+    });
+
+    await singupcontroller.singup();
+
+    print('Executou os dois segundos');
+
+    setState(() {
+      singupcontroller.isLoading = false;
+    });
   }
 
   @override
@@ -54,7 +69,7 @@ class _SignupPageState extends State<SignupPage> {
                 },
               ),
               AppTextField(
-                hintText: 'nom1e',
+                hintText: 'nome',
                 onChanged: (value) {
                   setState(() {
                     singupcontroller.nome = value;
@@ -141,10 +156,11 @@ class _SignupPageState extends State<SignupPage> {
                 ),
               ),
               AppElevatedButton(
-                onPressed: singupcontroller.isActiveButton
-                    ? () => print('Clicou em continuar')
-                    : null,
                 buttonText: 'Continuar',
+                isLoading: singupcontroller.isLoading,
+                onPressed: singupcontroller.isActiveButton
+                    ? () => singup()
+                    : null,
                 type: ButtonType.filled,
               ),
             ],

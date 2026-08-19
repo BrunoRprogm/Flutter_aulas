@@ -6,6 +6,7 @@ class singUpController {
   bool isActiveCheckbox = false;
   bool isActiveButton = false;
   bool isValidPassword = false;
+  bool isLoading = false;
 
   final RegExp specialCaracterPassword = RegExp(
     r'^(?=.*[!@#$%^&*(),.?":{}|<>_\-+=]).*$',
@@ -80,5 +81,10 @@ class singUpController {
       {'Pelo menos uma letra maiúscula': validacaoMinimoLetraMaiscula()},
       {'Pelo menos uma letra minúscula': validacaoMinimoLetraMinusculo()},
     ];
+  }
+
+  Future<void> singup() async {
+    await Future.delayed(Duration(seconds: 2));
+    print('Verifição dos dois segundos');
   }
 }

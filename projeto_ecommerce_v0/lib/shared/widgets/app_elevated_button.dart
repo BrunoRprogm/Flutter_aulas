@@ -8,14 +8,14 @@ class AppElevatedButton extends StatelessWidget {
   const AppElevatedButton({
     super.key,
     required this.onPressed,
-    required this.buttonText,
     required this.type,
     this.isLoading = false,
+    required this.label,
   });
 
+  final String label;
   final VoidCallback? onPressed;
   final ButtonType type;
-  final String buttonText;
   final bool isLoading;
 
   ButtonStyle _getStyle() {
@@ -57,7 +57,7 @@ class AppElevatedButton extends StatelessWidget {
                 child: CircularProgressIndicator(color: AppColors.grey100),
               ),
             )
-          : Text(buttonText),
+          : Text(label),
     );
   }
 }

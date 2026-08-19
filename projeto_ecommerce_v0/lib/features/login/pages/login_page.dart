@@ -19,17 +19,23 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  // Porque é definido desta forma? QUESTIONAR SOBRE!
+  final GlobalKey<FormState> key = GlobalKey<FormState>();
+
   @override
   initState() {
     super.initState();
   }
 
-  Future<void> login() async {
-    setState(() {
-      loginController.isLoading = true;
-    });
-
+  Future<void> _login() async {
+    if (key.currentState!.validate()) {
+      //Pedir explicação sobre o currentState!.validate
+      setState(() {
+        loginController.isLoading = true;
+      });
+    }
     await loginController.login();
+    print('Executei o login do controller');
 
     setState(() {
       loginController.isLoading = false;
@@ -44,115 +50,123 @@ class _LoginPageState extends State<LoginPage> {
       //Safearea desconta espaços do disposito ex: barra superior
       body: SafeArea(
         child: SingleChildScrollView(
-          child: SizedBox(
-            height:
-                MediaQuery.of(context).size.height -
-                MediaQuery.of(context).padding.top,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Spacer(),
+          child: Form(
+            key: key, //Pedir explicação sobre como isso funciona
+            child: SizedBox(
+              height:
+                  MediaQuery.of(context).size.height -
+                  MediaQuery.of(context).padding.top,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Spacer(),
 
-                  Image.asset('assets/images/locker.png', height: 120),
+                    Image.asset('assets/images/locker.png', height: 120),
 
-                  Center(child: Text('+DevsEcomm', style: AppTextStyle.title)),
-                  Spacer(flex: 2),
-                  AppTextField(
-                    errorText: loginController.emailError,
-                    hintText: 'email@dominio.com',
-                    onChanged: (value) {
-                      setState(() {
-                        loginController.setEmail(value);
-                      });
-                    },
-                  ),
-                  SizedBox(height: 16),
-                  AppTextField(
-                    errorText: loginController.senhaError,
-                    hintText: '****************',
-                    obscureText: true,
-                    onChanged: (value) {
-                      setState(() {
-                        loginController.setSenha(value);
-                      });
-                    },
-                  ),
-                  Row(
-                    children: [
-                      AppCheckBox(
-                        value: loginController.isActiveCheckbox,
-                        onChanged: (value) {
-                          setState(() {
-                            loginController.changeAtivateCheckBox();
-                          });
-                        },
-                      ),
-                      Text('Lembrar de mm', style: AppTextStyle.textSpan),
-                    ],
-                  ),
-                  Align(
-                    alignment: AlignmentGeometry.centerRight,
-                    child: TextButton(
-                      onPressed: () => {
-                        //Basicamente estou dizendo que quando meu usuário clickar em esqueci minha senha ele será direcionado a outra tela
-                        Navigator.pushNamed(context, RecoverPage.route),
+                    Center(
+                      child: Text('+DevsEcomm', style: AppTextStyle.title),
+                    ),
+                    Spacer(flex: 2),
+                    AppTextField(
+                      validator: (value) {
+                        //inserido validateEmail
+                        return loginController.validateEmail(
+                          value,
+                        ); //puxando o método pelo loginController
                       },
-                      child: Text(
-                        'Esqueci minha senha',
-                        style: AppTextStyle.buttonLabel.copyWith(
-                          color: Colors.black,
+                      hintText: 'email@dominio.com',
+                      onChanged: (value) {
+                        setState(() {
+                          loginController.setEmail(value);
+                        });
+                      },
+                    ),
+                    SizedBox(height: 16),
+                    AppTextField(
+                      //   errorText: loginController.senhaError,
+                      hintText: '****************',
+                      obscureText: true,
+                      onChanged: (value) {
+                        setState(() {
+                          loginController.setSenha(value);
+                        });
+                      },
+                    ),
+                    Row(
+                      children: [
+                        AppCheckBox(
+                          value: loginController.isActiveCheckbox,
+                          onChanged: (value) {
+                            setState(() {
+                              loginController.changeAtivateCheckBox();
+                            });
+                          },
+                        ),
+                        Text('Lembrar de mm', style: AppTextStyle.textSpan),
+                      ],
+                    ),
+                    Align(
+                      alignment: AlignmentGeometry.centerRight,
+                      child: TextButton(
+                        onPressed: () => {
+                          //Basicamente estou dizendo que quando meu usuário clickar em esqueci minha senha ele será direcionado a outra tela
+                          Navigator.pushNamed(context, RecoverPage.route),
+                        },
+                        child: Text(
+                          'Esqueci minha senha',
+                          style: AppTextStyle.buttonLabel.copyWith(
+                            color: Colors.black,
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  AppElevatedButton(
-                    isLoading: loginController.isLoading,
-                    buttonText: 'Entrar',
-                    onPressed: loginController.isActiveButton
-                        ? () => login()
-                        : null,
-                    type: ButtonType.filled,
-                  ),
-                  SizedBox(height: 12),
-                  AppElevatedButton(
-                    buttonText: 'Cadastrar',
-                    onPressed: () => {
-                      Navigator.pushNamed(context, SignupPage.route),
-                    },
-                    type: ButtonType.outlined,
-                  ),
-                  Spacer(flex: 2),
-                  //GestureDetector adiciona métodos de interação com usuario ex: onTap
-                  GestureDetector(
-                    onTap: () {
-                      print('CLIQUEI NA LINHA');
-                    },
-                    //RichText - Aninhar textos e modificar seu alinhamento
-                    child: RichText(
-                      textAlign: TextAlign.center,
-                      text: TextSpan(
-                        children: [
-                          TextSpan(
-                            text: 'Termos de Serviço ',
-                            style: TextStyle(color: Colors.black),
-                          ),
-                          TextSpan(
-                            text: 'e ',
-                            style: TextStyle(color: Colors.grey),
-                          ),
-                          TextSpan(
-                            text: 'Politicas de Privacidade',
-                            style: TextStyle(color: Colors.black),
-                          ),
-                        ],
+                    AppElevatedButton(
+                      label: 'Entrar', //
+                      isLoading: loginController.isLoading,
+                      onPressed: _login,
+                      type: ButtonType.filled,
+                    ),
+                    SizedBox(height: 12),
+                    AppElevatedButton(
+                      label: 'Cadastrar',
+                      onPressed: () => {
+                        Navigator.pushNamed(context, SignupPage.route),
+                      },
+                      type: ButtonType.outlined,
+                    ),
+                    Spacer(flex: 2),
+                    //GestureDetector adiciona métodos de interação com usuario ex: onTap
+                    GestureDetector(
+                      onTap: () {
+                        print('CLIQUEI NA LINHA');
+                      },
+                      //RichText - Aninhar textos e modificar seu alinhamento
+                      child: RichText(
+                        textAlign: TextAlign.center,
+                        text: TextSpan(
+                          children: [
+                            TextSpan(
+                              text: 'Termos de Serviço ',
+                              style: TextStyle(color: Colors.black),
+                            ),
+                            TextSpan(
+                              text: 'e ',
+                              style: TextStyle(color: Colors.grey),
+                            ),
+                            TextSpan(
+                              text: 'Politicas de Privacidade',
+                              style: TextStyle(color: Colors.black),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                  Spacer(),
-                ],
+                    Spacer(),
+                  ],
+                ),
               ),
             ),
           ),

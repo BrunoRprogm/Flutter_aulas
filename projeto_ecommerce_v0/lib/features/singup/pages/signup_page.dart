@@ -156,7 +156,7 @@ class _SignupPageState extends State<SignupPage> {
                 ),
               ),
               AppElevatedButton(
-                buttonText: 'Continuar',
+                label: 'Continuar',
                 isLoading: singupcontroller.isLoading,
                 onPressed: singupcontroller.isActiveButton
                     ? () => singup()

@@ -49,4 +49,12 @@ class LoginController {
     await Future.delayed(Duration(seconds: 2));
     print("agora executou os dois segundos depois");
   }
+
+  //Criado uma fuinção chamada por validate que fara a verificação do campo e-mail.
+  String? validateEmail(String? value) {
+    if (_emailRegex.hasMatch(email)) {
+      return null;
+    }
+    return 'E-mail inválido';
+  }
 }

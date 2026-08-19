@@ -43,7 +43,7 @@ class _RecoverPageState extends State<RecoverPage> {
                   ),
                   Spacer(),
                   AppElevatedButton(
-                    buttonText: 'Continuar',
+                    label: 'Continuar',
                     type: ButtonType.filled,
                     onPressed: recoverController.isActiveButton
                         ? () {

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:more_devs_do_zero/features/login/controllers/login_controller.dart';
 import 'package:more_devs_do_zero/features/singup/controllers/sing_up_controller.dart';
 import 'package:more_devs_do_zero/shared/app_text_style.dart';
 import 'package:more_devs_do_zero/shared/widgets/app_elevated_button.dart';
@@ -18,24 +17,27 @@ class SignupPage extends StatefulWidget {
 
 class _SignupPageState extends State<SignupPage> {
   singUpController singupcontroller = singUpController();
+  final GlobalKey<FormState> key = GlobalKey<FormState>();
 
   @override
   void initState() {
     super.initState();
   }
 
+  // Future<void> handleSignup () async
   Future<void> singup() async {
-    setState(() {
-      singupcontroller.isLoading = true;
-    });
+    if (key.currentState!.validate()) {
+      setState(() {
+        singupcontroller.isLoading = true;
+      });
+      await singupcontroller.singup();
 
-    await singupcontroller.singup();
+      print('Executou os dois segundos - na singup');
 
-    print('Executou os dois segundos');
-
-    setState(() {
-      singupcontroller.isLoading = false;
-    });
+      setState(() {
+        singupcontroller.isLoading = false;
+      });
+    }
   }
 
   @override
@@ -62,18 +64,16 @@ class _SignupPageState extends State<SignupPage> {
               ),
               AppTextField(
                 hintText: 'email@dominio.com',
-                onChanged: (value) {
-                  setState(() {
-                    singupcontroller.email = value;
-                  });
+                controller: singupcontroller.emailController,
+                validator: (value) {
+                  return singupcontroller.validateEmail(value);
                 },
               ),
               AppTextField(
                 hintText: 'nome',
-                onChanged: (value) {
-                  setState(() {
-                    singupcontroller.nome = value;
-                  });
+                controller: singupcontroller.nomeController,
+                validator: (value) {
+                  return singupcontroller.validateName(value);
                 },
               ),
               AppTextField(
@@ -158,9 +158,7 @@ class _SignupPageState extends State<SignupPage> {
               AppElevatedButton(
                 label: 'Continuar',
                 isLoading: singupcontroller.isLoading,
-                onPressed: singupcontroller.isActiveButton
-                    ? () => singup()
-                    : null,
+                onPressed: singup,
                 type: ButtonType.filled,
               ),
             ],

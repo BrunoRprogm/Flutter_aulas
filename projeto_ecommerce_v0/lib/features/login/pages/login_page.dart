@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:more_devs_do_zero/features/login/controllers/login_controller.dart';
 import 'package:more_devs_do_zero/features/recover/pages/recover_page.dart';
@@ -20,6 +18,7 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   // Porque é definido desta forma? QUESTIONAR SOBRE!
+  LoginController loginController = LoginController();
   final GlobalKey<FormState> key = GlobalKey<FormState>();
 
   @override
@@ -33,16 +32,14 @@ class _LoginPageState extends State<LoginPage> {
       setState(() {
         loginController.isLoading = true;
       });
+      await loginController.login();
+      print('Executei o login do controller');
+
+      setState(() {
+        loginController.isLoading = false;
+      });
     }
-    await loginController.login();
-    print('Executei o login do controller');
-
-    setState(() {
-      loginController.isLoading = false;
-    });
   }
-
-  LoginController loginController = LoginController();
 
   @override
   Widget build(BuildContext context) {
@@ -71,6 +68,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     Spacer(flex: 2),
                     AppTextField(
+                      controller: loginController.emailController,
                       validator: (value) {
                         //inserido validateEmail
                         return loginController.validateEmail(
@@ -78,22 +76,16 @@ class _LoginPageState extends State<LoginPage> {
                         ); //puxando o método pelo loginController
                       },
                       hintText: 'email@dominio.com',
-                      onChanged: (value) {
-                        setState(() {
-                          loginController.setEmail(value);
-                        });
-                      },
                     ),
                     SizedBox(height: 16),
                     AppTextField(
+                      controller: loginController.senhaController,
                       //   errorText: loginController.senhaError,
+                      validator: (value) {
+                        return loginController.validatePassword(value);
+                      },
                       hintText: '****************',
                       obscureText: true,
-                      onChanged: (value) {
-                        setState(() {
-                          loginController.setSenha(value);
-                        });
-                      },
                     ),
                     Row(
                       children: [

@@ -1,6 +1,6 @@
+import 'package:flutter/material.dart';
+
 class singUpController {
-  String email = '';
-  String nome = '';
   String senha = '';
   String confirmarSenha = '';
   bool isActiveCheckbox = false;
@@ -11,12 +11,32 @@ class singUpController {
   final RegExp specialCaracterPassword = RegExp(
     r'^(?=.*[!@#$%^&*(),.?":{}|<>_\-+=]).*$',
   );
+
+  final RegExp nameRegex = RegExp(r'^[A-Za-zÀ-ÿ\s]+$');
   final RegExp miniumCaracterMaisculo = RegExp(r'[A-Z]');
   final RegExp miniumCaracterMinusculo = RegExp(r'[a-z]');
   final RegExp emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+  TextEditingController emailController = TextEditingController();
+  TextEditingController nomeController = TextEditingController();
 
   bool isEmailValid() {
-    return emailRegex.hasMatch(email.trim());
+    return emailRegex.hasMatch(emailController.text.trim());
+  }
+
+  String? validateEmail(String? value) {
+    if (emailRegex.hasMatch(emailController.text)) {
+      //Sempre lembrar de colocar o .text pois faz parte do parâmetro  TextEditingController
+      return null;
+    }
+    return 'E-mail inválido';
+  }
+
+  String? validateName(String? value) {
+    if (nameRegex.hasMatch(nomeController.text)) {
+      //Sempre lembrar de colocar o .text pois faz parte do parâmetro  TextEditingController
+      return null;
+    }
+    return 'Nome inválido';
   }
 
   bool validacaoTamanhoSenha() {
@@ -37,16 +57,6 @@ class singUpController {
 
   bool senhasConcidem() {
     return senha.isNotEmpty && senha == confirmarSenha;
-  }
-
-  void updateEmail(String value) {
-    email = value;
-    changeActivateButton();
-  }
-
-  void updateNome(String value) {
-    nome = value;
-    changeActivateButton();
   }
 
   void updateSenha(String value) {

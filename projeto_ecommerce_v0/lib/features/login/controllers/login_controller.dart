@@ -1,44 +1,15 @@
+import 'package:flutter/material.dart';
+
 class LoginController {
   final RegExp _emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
   final RegExp _senhaRegex = RegExp(r'^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$');
-  String email = '';
-  String senha = '';
+  bool get isEmailValid => _emailRegex.hasMatch(emailController.text.trim());
+  bool get isSenhaValid => _senhaRegex.hasMatch(senhaController.text.trim());
+  TextEditingController emailController = TextEditingController();
+  TextEditingController senhaController = TextEditingController();
+
   bool isActiveCheckbox = false;
-  bool isActiveButton = false;
   bool isLoading = false;
-
-  bool get isEmailValid => _emailRegex.hasMatch(email.trim());
-  bool get isSenhaValid => _senhaRegex.hasMatch(senha.trim());
-
-  //adicionar lógica ex: Regex.
-  String? get emailError {
-    if (email.trim().isEmpty || isEmailValid) {
-      return null;
-    }
-    return 'E-mail inválido!';
-  }
-
-  //adicionar lógica ex: RegexSenha.
-  String? get senhaError {
-    if (senha.trim().isEmpty || isSenhaValid) {
-      return null;
-    }
-    return 'Senha inválida';
-  }
-
-  void changeActivateButton() {
-    isActiveButton = isEmailValid && isSenhaValid;
-  }
-
-  void setSenha(String senhaParam) {
-    senha = senhaParam;
-    changeActivateButton();
-  }
-
-  void setEmail(String emailParam) {
-    email = emailParam;
-    changeActivateButton();
-  }
 
   void changeAtivateCheckBox() {
     isActiveCheckbox = !isActiveCheckbox;
@@ -50,11 +21,20 @@ class LoginController {
     print("agora executou os dois segundos depois");
   }
 
-  //Criado uma fuinção chamada por validate que fara a verificação do campo e-mail.
+  //Criado uma função chamada por validate que fara a verificação do campo e-mail.
   String? validateEmail(String? value) {
-    if (_emailRegex.hasMatch(email)) {
+    if (_emailRegex.hasMatch(emailController.text)) {
+      //Sempre lembrar de colocar o .text pois faz parte do parâmetro  TextEditingController
       return null;
     }
     return 'E-mail inválido';
+  }
+
+  String? validatePassword(String? value) {
+    print(_senhaRegex.hasMatch(senhaController.text));
+    if (_senhaRegex.hasMatch(senhaController.text)) {
+      return null;
+    }
+    return 'Senha inválida';
   }
 }

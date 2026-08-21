@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
 class singUpController {
-  String senha = '';
   String confirmarSenha = '';
   bool isActiveCheckbox = false;
   bool isActiveButton = false;
   bool isValidPassword = false;
   bool isLoading = false;
+  bool hasErrorCheckbox = false;
 
   final RegExp specialCaracterPassword = RegExp(
     r'^(?=.*[!@#$%^&*(),.?":{}|<>_\-+=]).*$',
@@ -18,6 +18,7 @@ class singUpController {
   final RegExp emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
   TextEditingController emailController = TextEditingController();
   TextEditingController nomeController = TextEditingController();
+  TextEditingController senhaController = TextEditingController();
 
   bool isEmailValid() {
     return emailRegex.hasMatch(emailController.text.trim());
@@ -39,28 +40,51 @@ class singUpController {
     return 'Nome inválido';
   }
 
+  String? validateSenha(String? value) {
+    if (!validacaoCaracterEspecial()) {
+      return 'caracter especial não atendido.';
+    }
+
+    if (!validacaoTamanhoSenha()) {
+      return 'tamanho de senha não atendido';
+    }
+
+    if (!validacaoMinimoLetraMinusculo()) {
+      return 'No mínimo 1 letras mínuscula deve estar inserida';
+    }
+
+    if (!validacaoMinimoLetraMaiscula()) {
+      return 'No mínimo 1 letras maíscula deve estar inserida';
+    }
+
+    if (!senhasConcidem()) {
+      return 'Senhas não coincidem';
+    }
+  }
+
   bool validacaoTamanhoSenha() {
-    return senha.length >= 6;
+    return senhaController.text.length >= 6;
   }
 
   bool validacaoCaracterEspecial() {
-    return specialCaracterPassword.hasMatch(senha);
+    return specialCaracterPassword.hasMatch(senhaController.text);
   }
 
   bool validacaoMinimoLetraMaiscula() {
-    return miniumCaracterMaisculo.hasMatch(senha);
+    return miniumCaracterMaisculo.hasMatch(senhaController.text);
   }
 
   bool validacaoMinimoLetraMinusculo() {
-    return miniumCaracterMinusculo.hasMatch(senha);
+    return miniumCaracterMinusculo.hasMatch(senhaController.text);
   }
 
   bool senhasConcidem() {
-    return senha.isNotEmpty && senha == confirmarSenha;
+    return senhaController.text.isNotEmpty &&
+        senhaController.text == confirmarSenha;
   }
 
   void updateSenha(String value) {
-    senha = value;
+    senhaController.text = value;
     changeActivateButton();
   }
 
@@ -71,6 +95,7 @@ class singUpController {
 
   void changeAtivateCheckBox() {
     isActiveCheckbox = !isActiveCheckbox;
+    hasErrorCheckbox = false;
     changeActivateButton();
   }
 
@@ -82,15 +107,6 @@ class singUpController {
         validacaoMinimoLetraMaiscula() &&
         validacaoMinimoLetraMinusculo() &&
         isActiveCheckbox;
-  }
-
-  List<Map<String, bool>> getPasswordRequirements() {
-    return [
-      {'Tamanho mínimo de 6 caracteres': validacaoTamanhoSenha()},
-      {'Pelo menos um caractere especial': validacaoCaracterEspecial()},
-      {'Pelo menos uma letra maiúscula': validacaoMinimoLetraMaiscula()},
-      {'Pelo menos uma letra minúscula': validacaoMinimoLetraMinusculo()},
-    ];
   }
 
   Future<void> singup() async {

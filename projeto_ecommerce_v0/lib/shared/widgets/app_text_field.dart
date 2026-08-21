@@ -42,7 +42,7 @@ class _AppTextFieldState extends State<AppTextField> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      autovalidateMode: AutovalidateMode.onUnfocus,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
       onChanged: widget.onChanged,
       obscureText: isObscure,
       validator: widget.validator,

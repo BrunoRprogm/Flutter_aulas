@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:more_devs_do_zero/features/singup/controllers/sing_up_controller.dart';
 import 'package:more_devs_do_zero/shared/app_text_style.dart';
+import 'package:more_devs_do_zero/shared/widgets/app_check_box.dart';
 import 'package:more_devs_do_zero/shared/widgets/app_elevated_button.dart';
 import 'package:more_devs_do_zero/shared/widgets/app_password_requirement.dart';
 import 'package:more_devs_do_zero/shared/widgets/app_text_field.dart';
@@ -26,7 +27,7 @@ class _SignupPageState extends State<SignupPage> {
 
   // Future<void> handleSignup () async
   Future<void> singup() async {
-    if (key.currentState!.validate()) {
+    if (key.currentState!.validate() && singupcontroller.isActiveCheckbox) {
       setState(() {
         singupcontroller.isLoading = true;
       });
@@ -38,6 +39,12 @@ class _SignupPageState extends State<SignupPage> {
         singupcontroller.isLoading = false;
       });
     }
+
+    if (!singupcontroller.isActiveCheckbox) {
+      setState(() {
+        singupcontroller.hasErrorCheckbox = true;
+      });
+    }
   }
 
   @override
@@ -47,121 +54,129 @@ class _SignupPageState extends State<SignupPage> {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.start,
-            spacing: 24,
-            children: [
-              Column(
-                spacing: 2,
-                children: [
-                  Text('Criar uma conta', style: AppTextStyle.title),
-                  Text(
-                    'Insira seus dados para iniciar as compras',
-                    style: AppTextStyle.subtitle,
-                  ),
-                ],
-              ),
-              AppTextField(
-                hintText: 'email@dominio.com',
-                controller: singupcontroller.emailController,
-                validator: (value) {
-                  return singupcontroller.validateEmail(value);
-                },
-              ),
-              AppTextField(
-                hintText: 'nome',
-                controller: singupcontroller.nomeController,
-                validator: (value) {
-                  return singupcontroller.validateName(value);
-                },
-              ),
-              AppTextField(
-                hintText: 'senha',
-                onChanged: (value) {
-                  setState(() {
-                    singupcontroller.senha = value;
-                  });
-                },
-              ),
-              AppTextField(
-                hintText: 'confirmar senha',
-                onChanged: (value) {
-                  setState(() {
-                    singupcontroller.confirmarSenha = value;
-                  });
-                },
-              ),
-
-              AppPasswordRequirement(
-                label: 'Mínimo de 6 caracteres',
-                isValid: singupcontroller.validacaoTamanhoSenha(),
-              ),
-              AppPasswordRequirement(
-                label: 'No mínimo um caracteres especial',
-                isValid: singupcontroller.validacaoCaracterEspecial(),
-              ),
-              AppPasswordRequirement(
-                label: 'No mínimo uma letra maiuscula',
-                isValid: singupcontroller.validacaoMinimoLetraMaiscula(),
-              ),
-              AppPasswordRequirement(
-                label: 'No mínimo uma letra minusculas',
-                isValid: singupcontroller.validacaoMinimoLetraMinusculo(),
-              ),
-              AppPasswordRequirement(
-                label: 'As senhas concidem',
-                isValid: singupcontroller.senhasConcidem(),
-              ),
-
-              GestureDetector(
-                onTap: () => print(
-                  'Abrindo link para Termos de Serviço e Política de Privacidade',
-                ),
-                child: Row(
+          child: Form(
+            key: key,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
+              spacing: 24,
+              children: [
+                Column(
+                  spacing: 2,
                   children: [
-                    Checkbox(
-                      value: singupcontroller.isActiveCheckbox,
-                      onChanged: (value) {
-                        setState(() {
-                          singupcontroller.changeAtivateCheckBox();
-                        });
-                      },
-                    ),
-                    RichText(
-                      textAlign: TextAlign.center,
-                      text: TextSpan(
-                        children: [
-                          TextSpan(
-                            text:
-                                'Ao clicar em continuar, você concorda \ncom os nossos ',
-                            style: AppTextStyle.textSpan,
-                          ),
-                          TextSpan(
-                            text: 'Termos de Serviço ',
-                            style: AppTextStyle.highlightedTextSpan,
-                          ),
-                          TextSpan(
-                            text: 'e com a ',
-                            style: AppTextStyle.textSpan,
-                          ),
-                          TextSpan(
-                            text: '\nPolítica de Privacidade ',
-                            style: AppTextStyle.highlightedTextSpan,
-                          ),
-                        ],
-                      ),
+                    Text('Criar uma conta', style: AppTextStyle.title),
+                    Text(
+                      'Insira seus dados para iniciar as compras',
+                      style: AppTextStyle.subtitle,
                     ),
                   ],
                 ),
-              ),
-              AppElevatedButton(
-                label: 'Continuar',
-                isLoading: singupcontroller.isLoading,
-                onPressed: singup,
-                type: ButtonType.filled,
-              ),
-            ],
+                AppTextField(
+                  hintText: 'email@dominio.com',
+                  controller: singupcontroller.emailController,
+                  validator: (value) {
+                    return singupcontroller.validateEmail(value);
+                  },
+                ),
+                AppTextField(
+                  hintText: 'nome',
+                  controller: singupcontroller.nomeController,
+                  validator: (value) {
+                    return singupcontroller.validateName(value);
+                  },
+                ),
+                AppTextField(
+                  hintText: 'senha',
+                  controller: singupcontroller.senhaController,
+                  validator: (value) {
+                    return singupcontroller.validateSenha(value);
+                  }, // Neste caso precisamos do onChanged pois a tela não entende
+                  //Que ela precisar atualizar  a cada digitação e cumprimento dos checks
+                  //do usuário
+                  onChanged: (value) {
+                    setState(() {});
+                  },
+                ),
+                AppTextField(
+                  hintText: 'confirmar senha',
+                  onChanged: (value) {
+                    setState(() {
+                      singupcontroller.confirmarSenha = value;
+                    });
+                  },
+                ),
+
+                //  AppPasswordRequirement(
+                //   label: 'Mínimo de 6 caracteres',
+                //  isValid: singupcontroller.,
+                //  ),
+                AppPasswordRequirement(
+                  label: 'No mínimo um caracteres especial',
+                  isValid: singupcontroller.validacaoCaracterEspecial(),
+                ),
+                AppPasswordRequirement(
+                  label: 'No mínimo uma letra maiuscula',
+                  isValid: singupcontroller.validacaoMinimoLetraMaiscula(),
+                ),
+                AppPasswordRequirement(
+                  label: 'No mínimo uma letra minusculas',
+                  isValid: singupcontroller.validacaoMinimoLetraMinusculo(),
+                ),
+                AppPasswordRequirement(
+                  label: 'As senhas concidem',
+                  isValid: singupcontroller.senhasConcidem(),
+                ),
+
+                GestureDetector(
+                  onTap: () => print(
+                    'Abrindo link para Termos de Serviço e Política de Privacidade',
+                  ),
+                  child: Row(
+                    children: [
+                      AppCheckBox(
+                        hasError: singupcontroller.hasErrorCheckbox,
+                        value: singupcontroller.isActiveCheckbox,
+                        onChanged: (value) {
+                          setState(() {
+                            singupcontroller.changeAtivateCheckBox();
+                          });
+                        },
+                      ),
+                      RichText(
+                        textAlign: TextAlign.center,
+                        text: TextSpan(
+                          children: [
+                            TextSpan(
+                              text:
+                                  'Ao clicar em continuar, você concorda \ncom os nossos ',
+                              style: AppTextStyle.textSpan,
+                            ),
+                            TextSpan(
+                              text: 'Termos de Serviço ',
+                              style: AppTextStyle.highlightedTextSpan,
+                            ),
+                            TextSpan(
+                              text: 'e com a ',
+                              style: AppTextStyle.textSpan,
+                            ),
+                            TextSpan(
+                              text: '\nPolítica de Privacidade ',
+                              style: AppTextStyle.highlightedTextSpan,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                AppElevatedButton(
+                  label: 'Continuar',
+                  isLoading: singupcontroller.isLoading,
+                  onPressed: singup,
+                  type: ButtonType.filled,
+                ),
+              ],
+            ),
           ),
         ),
       ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:more_devs_do_zero/features/home/pages/home_page.dart';
 import 'package:more_devs_do_zero/features/login/controllers/login_controller.dart';
 import 'package:more_devs_do_zero/features/recover/pages/recover_page.dart';
 import 'package:more_devs_do_zero/features/singup/pages/signup_page.dart';
@@ -21,6 +22,7 @@ class LoginPage extends StatelessWidget {
         child: SingleChildScrollView(
           child: Consumer<LoginController>(
             builder: (context, controller, child) {
+              // Basicamente está dizendo para minha tela que ela houve um controller que extend chanceNotify
               return Form(
                 key: controller.key, //Pedir explicação sobre como isso funciona
                 child: SizedBox(
@@ -90,7 +92,12 @@ class LoginPage extends StatelessWidget {
                         AppElevatedButton(
                           label: 'Entrar', //
                           isLoading: controller.isLoading,
-                          onPressed: controller.handleLogin,
+                          onPressed: () async {
+                            try {
+                              await controller.handleLogin();
+                              Navigator.pushNamed(context, HomePage.route);
+                            } catch (e) {}
+                          },
                           type: ButtonType.filled,
                         ),
                         SizedBox(height: 12),

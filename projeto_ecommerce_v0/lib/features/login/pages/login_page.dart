@@ -1,8 +1,11 @@
+import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:more_devs_do_zero/features/home/pages/home_page.dart';
 import 'package:more_devs_do_zero/features/login/controllers/login_controller.dart';
 import 'package:more_devs_do_zero/features/recover/pages/recover_page.dart';
 import 'package:more_devs_do_zero/features/singup/pages/signup_page.dart';
 import 'package:more_devs_do_zero/shared/app_text_style.dart';
+import 'package:more_devs_do_zero/shared/exceptions/auth_exception.dart';
 import 'package:more_devs_do_zero/shared/widgets/app_check_box.dart';
 import 'package:more_devs_do_zero/shared/widgets/app_elevated_button.dart';
 import 'package:more_devs_do_zero/shared/widgets/app_text_field.dart';
@@ -21,6 +24,7 @@ class LoginPage extends StatelessWidget {
         child: SingleChildScrollView(
           child: Consumer<LoginController>(
             builder: (context, controller, child) {
+              // Basicamente está dizendo para minha tela que ela houve um controller que extend chanceNotify
               return Form(
                 key: controller.key, //Pedir explicação sobre como isso funciona
                 child: SizedBox(
@@ -90,7 +94,22 @@ class LoginPage extends StatelessWidget {
                         AppElevatedButton(
                           label: 'Entrar', //
                           isLoading: controller.isLoading,
-                          onPressed: controller.handleLogin,
+                          onPressed: () async {
+                            try {
+                              await controller.handleLogin();
+                              Navigator.popAndPushNamed(
+                                context,
+                                HomePage.route,
+                              );
+                            } on AuthException catch (e) {
+                              AnimatedSnackBar.material(
+                                e.message,
+                                type: AnimatedSnackBarType.error,
+                                mobileSnackBarPosition:
+                                    MobileSnackBarPosition.bottom,
+                              ).show(context);
+                            }
+                          },
                           type: ButtonType.filled,
                         ),
                         SizedBox(height: 12),

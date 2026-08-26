@@ -2,6 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:more_devs_do_zero/features/login/model/user.dart';
 import 'package:more_devs_do_zero/shared/exceptions/auth_exception.dart';
 
+class User {
+  final String email;
+  final String nome;
+
+  User({required this.email, required this.nome});
+}
+
 class LoginController extends ChangeNotifier {
   final RegExp _emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
   final RegExp _senhaRegex = RegExp(r'^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$');

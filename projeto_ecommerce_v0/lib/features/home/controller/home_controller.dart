@@ -1,14 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:more_devs_do_zero/features/home/models/category_model.dart';
+import 'package:more_devs_do_zero/features/home/models/product_model.dart';
+import 'package:more_devs_do_zero/shared/mocks.dart';
 
 enum CategoriesViewState { loading, sucess, error }
 
+enum ProductsViewState { loading, sucess, error }
+
 class HomeController extends ChangeNotifier {
   List<Category> categories = [];
+  List<Product> products = [];
 
+  ProductsViewState productsState = ProductsViewState.loading;
   CategoriesViewState categoriaState = CategoriesViewState.loading;
+
   //Seta o estado da página de acordo com loading, sucess, error
   void changeCategoriaState(CategoriesViewState state) {
     categoriaState = state;
+    notifyListeners();
+  }
+
+  void changeProductState(ProductsViewState state) {
+    productsState = state;
     notifyListeners();
   }
 
@@ -16,36 +29,25 @@ class HomeController extends ChangeNotifier {
     changeCategoriaState(CategoriesViewState.loading);
     await Future.delayed(Duration(seconds: 3));
     try {
-      categories = [
-        for (var element in categoriesJson) Category.fromJson(element),
-      ];
+      categories = categoriesJson.map((item) {
+        return Category.fromJson(item);
+      }).toList();
       changeCategoriaState(CategoriesViewState.sucess);
     } catch (e) {
       changeCategoriaState(CategoriesViewState.error);
     }
   }
-}
 
-class Category {
-  final String name;
-  final String imageUrl;
-
-  Category({required this.name, required this.imageUrl});
-
-  factory Category.fromJson(Map<String, dynamic> map) {
-    return Category(name: map['name'], imageUrl: map['imageUrl']);
+  Future<void> getProdutos() async {
+    changeProductState(ProductsViewState.loading);
+    await Future.delayed(Duration(seconds: 3));
+    try {
+      products = productsJson.map((item) {
+        return Product.fromJson(item);
+      }).toList();
+      changeProductState(ProductsViewState.sucess);
+    } catch (e) {
+      changeProductState(ProductsViewState.error);
+    }
   }
 }
-
-final List<Map<String, dynamic>> categoriesJson = [
-  {'name': 'Frutas', 'imageUrl': 'https://i.postimg.cc/SNX7hc6F/Image.png'},
-  {
-    'name': 'Verduras',
-    'imageUrl': 'https://i.postimg.cc/8PFBSLh2/Image-(1).png',
-  },
-  {'name': 'Padaria', 'imageUrl': 'https://i.postimg.cc/xTky2LvV/Image-1.png'},
-  {
-    'name': 'Importados',
-    'imageUrl': 'https://i.postimg.cc/Yq4fHQ6w/Image-2.png',
-  },
-];

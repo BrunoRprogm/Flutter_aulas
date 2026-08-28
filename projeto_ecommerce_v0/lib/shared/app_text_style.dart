@@ -8,6 +8,12 @@ class AppTextStyle {
     fontWeight: FontWeight.bold,
   );
 
+  static const TextStyle titleProduct = TextStyle(
+    color: AppColors.black,
+    fontSize: 20,
+    fontWeight: FontWeight.bold,
+  );
+
   static const TextStyle subtitle = TextStyle(
     color: AppColors.black,
     fontSize: 14,
@@ -41,5 +47,17 @@ class AppTextStyle {
     color: AppColors.green,
     fontSize: 14,
     fontWeight: FontWeight.w400,
+  );
+
+  static const TextStyle productName = TextStyle(
+    color: Colors.black,
+    fontSize: 20,
+    fontWeight: FontWeight.w400,
+  );
+
+  static const TextStyle priceProduct = TextStyle(
+    color: Color.fromARGB(255, 31, 124, 34),
+    fontSize: 14,
+    fontWeight: FontWeight.bold,
   );
 }

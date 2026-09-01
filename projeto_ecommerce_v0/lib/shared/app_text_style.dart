@@ -60,4 +60,19 @@ class AppTextStyle {
     fontSize: 14,
     fontWeight: FontWeight.bold,
   );
+
+  static TextStyle smallBlack = TextStyle(
+    fontWeight: FontWeight.w500,
+    color: AppColors.black,
+  );
+
+  static TextStyle smallGrey = TextStyle(
+    fontWeight: FontWeight.w500,
+    color: AppColors.grey600,
+  );
+
+  static TextStyle smallGreen = TextStyle(
+    fontWeight: FontWeight.w500,
+    color: AppColors.green,
+  );
 }

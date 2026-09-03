@@ -1,14 +1,18 @@
+import 'package:more_devs_do_zero/features/home/models/category_model.dart';
+
 class Product {
   final String name;
   final String imageUrl;
   final String brand;
   final double price;
+  final Category category;
 
   Product({
     required this.name,
     required this.imageUrl,
     required this.brand,
     required this.price,
+    required this.category,
   });
 
   factory Product.fromJson(Map<String, dynamic> json) {
@@ -17,6 +21,7 @@ class Product {
       imageUrl: json['imageUrl'],
       brand: json['brand'],
       price: (json['price'] as num).toDouble(),
+      category: (json['category']),
     );
   }
 }

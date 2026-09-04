@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:more_devs_do_zero/features/home/controller/home_controller.dart';
-import 'package:more_devs_do_zero/features/home/models/category_model.dart';
+import 'package:more_devs_do_zero/features/home/models/category_model.dart'; // ← adiciona esse import
 import 'package:more_devs_do_zero/features/home/models/product_model.dart';
 import 'package:more_devs_do_zero/features/home/widgets/product_card.dart';
 import 'package:more_devs_do_zero/shared/app_text_style.dart';
+
 import 'package:skeletonizer/skeletonizer.dart';
 
 class ProductsSection extends StatelessWidget {
@@ -11,10 +12,18 @@ class ProductsSection extends StatelessWidget {
     super.key,
     required this.state,
     required this.products,
+    required this.category, // ← adiciona isso
   });
 
   final ProductsViewState state;
   final List<Product> products;
+  final Category category; // ← adiciona isso
+
+  // Categoria fake para o skeleton loader
+  static final Category _fakeCategory = Category(
+    name: 'Categoria',
+    imageUrl: '',
+  );
 
   static final List<Product> _fakeProducts = List.filled(
     4,
@@ -23,7 +32,7 @@ class ProductsSection extends StatelessWidget {
       name: 'Nome do produto',
       imageUrl: '',
       price: 0,
-      category: Category(name: 'Nome', imageUrl: ''),
+      category: _fakeCategory,
     ),
   );
 
@@ -56,13 +65,17 @@ class ProductsSection extends StatelessWidget {
                   physics: isLoading
                       ? const NeverScrollableScrollPhysics()
                       : null,
-                  // child: IntrinsicHeight(
-                  //   child: Row(
-                  //     children: items.map((Product product) {
-                  //  /*O que eu faço?*/    return ProductCard(product:  );
-                  //     }).toList(),
-                  //   ),
-                  // ),
+                  child: IntrinsicHeight(
+                    child: Row(
+                      children: items.map((Product product) {
+                        // ← usa _fakeCategory no loading, category real no success
+                        return ProductCard(
+                          isLoading ? _fakeCategory : category,
+                          product: product,
+                        );
+                      }).toList(),
+                    ),
+                  ),
                 ),
               );
             },

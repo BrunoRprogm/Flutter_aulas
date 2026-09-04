@@ -22,7 +22,6 @@ class ProductCard extends StatelessWidget {
         );
       },
       child: Container(
-        width: 150,
         margin: EdgeInsets.symmetric(horizontal: 10),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

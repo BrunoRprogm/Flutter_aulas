@@ -5,7 +5,7 @@ import 'package:more_devs_do_zero/shared/mocks.dart';
 enum ProductsByCategoryViewState { loading, success, error }
 
 class ProductsByCategoryPageController extends ChangeNotifier {
-  List<Product> _categoryProducts = [];
+  List<Product> categoryProducts = [];
   String _query = '';
 
   ProductsByCategoryViewState state = ProductsByCategoryViewState.loading;
@@ -22,10 +22,11 @@ class ProductsByCategoryPageController extends ChangeNotifier {
     ); /*Simulação de API faz esperar 2s */
 
     try {
-      _categoryProducts = productsJson
+      categoryProducts = productsJson
           .map((item) => Product.fromJson(item))
-          .where((product) => product.category == category)
+          .where((product) => product.category.name == category)
           .toList();
+      changeState(ProductsByCategoryViewState.success);
     } catch (e) {
       changeState(ProductsByCategoryViewState.error);
     }

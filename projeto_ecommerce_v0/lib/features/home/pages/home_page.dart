@@ -60,6 +60,9 @@ class _HomePageState extends State<HomePage> {
               ProductsSection(
                 state: HomeController.productsState,
                 products: HomeController.products,
+                category: HomeController.categories.isNotEmpty
+                    ? HomeController.categories.first
+                    : Category(name: '', imageUrl: ''),
               ),
               AppElevatedButton(
                 onPressed: () {

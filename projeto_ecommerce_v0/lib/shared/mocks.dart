@@ -17,14 +17,14 @@ final List<Map<String, dynamic>> productsJson = [
     'name': 'Rabanete',
     'imageUrl': 'https://i.postimg.cc/8Pt82Qmf/Image-1.png',
     'price': 10.99,
-    'category': 'Verduras',
+    'category': 'Padaria',
   },
   {
     'brand': 'Akatsu',
     'name': 'Acerola',
     'imageUrl': 'https://i.postimg.cc/BQMWr9B8/Image.png',
     'price': 7.99,
-    'category': 'Verduras',
+    'category': 'Importados',
   },
   {
     'brand': 'Natural da terra',
@@ -39,5 +39,19 @@ final List<Map<String, dynamic>> productsJson = [
     'imageUrl': 'https://i.postimg.cc/RVP8P1vw/Image-2.png',
     'price': 12.19,
     'category': 'Mágico',
+  },
+  {
+    'brand': 'Natural da terra',
+    'name': 'Cogumelo',
+    'imageUrl': 'https://i.postimg.cc/RVP8P1vw/Image-2.png',
+    'price': 12.19,
+    'category': 'Mágico',
+  },
+  {
+    'brand': 'Natural da terra',
+    'name': 'Maça',
+    'imageUrl': 'https://i.postimg.cc/RVP8P1vw/Image-2.png',
+    'price': 12.19,
+    'category': 'Frutas',
   },
 ];

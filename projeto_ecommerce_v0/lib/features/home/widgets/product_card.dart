@@ -1,26 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:more_devs_do_zero/features/home/models/category_model.dart';
 import 'package:more_devs_do_zero/features/home/models/product_model.dart';
-import 'package:more_devs_do_zero/features/home/pages/products_by_categorypage.dart';
 import 'package:more_devs_do_zero/shared/app_text_style.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class ProductCard extends StatelessWidget {
-  const ProductCard(this.category, {super.key, required this.product});
+  const ProductCard(
+    this.category, {
+    super.key,
+    required this.product,
+    this.onTap,
+  });
 
   final Product product;
   final Category category;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        Navigator.pushNamed(
-          context,
-          ProductsByCategoryPage.route,
-          arguments: category.name,
-        );
-      },
+      onTap: onTap,
       child: Container(
         margin: EdgeInsets.symmetric(horizontal: 10),
         child: Column(

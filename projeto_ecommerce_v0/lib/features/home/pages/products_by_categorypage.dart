@@ -9,7 +9,7 @@ class ProductsByCategoryPage extends StatefulWidget {
 
   static const String route = '/products-by-category';
   final String categoryName;
-
+  @override
   State<ProductsByCategoryPage> createState() => _ProductsByCategorypageState();
 }
 
@@ -22,6 +22,34 @@ class _ProductsByCategorypageState extends State<ProductsByCategoryPage> {
         widget.categoryName,
       );
     });
+  }
+
+  void abrirDetalhesDoProduto(BuildContext context, Product product) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      builder: (context) {
+        return Padding(
+          padding: EdgeInsetsGeometry.all(30),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              ClipRRect(
+                // Faz com os filhos dessa classe tenham os cantos arredondads.
+                borderRadius: BorderRadiusGeometry.all(Radius.circular(12)),
+                child: Image.network(
+                  product.imageUrl,
+                  height: 150,
+                  width: 150,
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
 
   @override

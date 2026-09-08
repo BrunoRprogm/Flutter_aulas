@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:more_devs_do_zero/features/home/controller/home_controller.dart';
 import 'package:more_devs_do_zero/features/home/models/category_model.dart'; // ← adiciona esse import
 import 'package:more_devs_do_zero/features/home/models/product_model.dart';
+import 'package:more_devs_do_zero/features/home/pages/products_by_categorypage.dart';
 import 'package:more_devs_do_zero/features/home/widgets/product_card.dart';
 import 'package:more_devs_do_zero/shared/app_text_style.dart';
 
@@ -68,10 +69,18 @@ class ProductsSection extends StatelessWidget {
                   child: IntrinsicHeight(
                     child: Row(
                       children: items.map((Product product) {
-                        // ← usa _fakeCategory no loading, category real no success
                         return ProductCard(
                           isLoading ? _fakeCategory : category,
                           product: product,
+                          onTap: isLoading
+                              ? null
+                              : () {
+                                  Navigator.pushNamed(
+                                    context,
+                                    ProductsByCategoryPage.route,
+                                    arguments: product.name,
+                                  );
+                                },
                         );
                       }).toList(),
                     ),

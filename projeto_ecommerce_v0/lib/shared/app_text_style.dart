@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:more_devs_do_zero/shared/app_colors.dart';
 
@@ -31,6 +32,11 @@ class AppTextStyle {
     fontWeight: FontWeight.w400,
   );
 
+  static const TextStyle descriptionProduct = TextStyle(
+    fontSize: 18,
+    color: Colors.black,
+  );
+
   static const TextStyle highlightedTextSpan = TextStyle(
     color: AppColors.black,
     fontSize: 14,
@@ -59,6 +65,12 @@ class AppTextStyle {
     color: Color.fromARGB(255, 31, 124, 34),
     fontSize: 14,
     fontWeight: FontWeight.bold,
+  );
+
+  static const TextStyle priceProduct2 = TextStyle(
+    color: Color.fromARGB(255, 13, 13, 13),
+    fontSize: 32,
+    fontWeight: FontWeight.w800,
   );
 
   static TextStyle smallBlack = TextStyle(

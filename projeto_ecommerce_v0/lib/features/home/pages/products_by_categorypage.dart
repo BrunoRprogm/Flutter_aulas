@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:more_devs_do_zero/features/home/models/product_model.dart';
-import 'package:more_devs_do_zero/features/home/models/products_by_category_page_controller.dart';
+import 'package:more_devs_do_zero/features/home/controller/products_by_category_page_controller.dart';
 import 'package:more_devs_do_zero/features/home/widgets/product_card.dart';
 import 'package:provider/provider.dart';
 
@@ -22,34 +22,6 @@ class _ProductsByCategorypageState extends State<ProductsByCategoryPage> {
         widget.categoryName,
       );
     });
-  }
-
-  void abrirDetalhesDoProduto(BuildContext context, Product product) {
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      builder: (context) {
-        return Padding(
-          padding: EdgeInsetsGeometry.all(30),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              ClipRRect(
-                // Faz com os filhos dessa classe tenham os cantos arredondads.
-                borderRadius: BorderRadiusGeometry.all(Radius.circular(12)),
-                child: Image.network(
-                  product.imageUrl,
-                  height: 150,
-                  width: 150,
-                  fit: BoxFit.cover,
-                ),
-              ),
-            ],
-          ),
-        );
-      },
-    );
   }
 
   @override
@@ -85,12 +57,14 @@ class _ProductsByCategorypageState extends State<ProductsByCategoryPage> {
                   decoration: InputDecoration(
                     hintText: 'Buscar Produto',
                     border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8),
+                      borderRadius: BorderRadius.circular(20),
                       borderSide: BorderSide(color: Colors.grey.shade300),
                     ),
                     enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8),
-                      borderSide: BorderSide(color: Colors.grey.shade300),
+                      borderRadius: BorderRadius.circular(20),
+                      borderSide: BorderSide(
+                        color: const Color.fromARGB(255, 46, 44, 44),
+                      ),
                     ),
                     contentPadding: EdgeInsets.symmetric(
                       horizontal: 16,

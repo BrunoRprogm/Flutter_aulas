@@ -7,6 +7,7 @@ import 'package:more_devs_do_zero/features/home/widgets/products_section.dart';
 import 'package:more_devs_do_zero/features/login/controllers/login_controller.dart';
 import 'package:more_devs_do_zero/shared/app_text_style.dart';
 import 'package:more_devs_do_zero/shared/widgets/app_elevated_button.dart';
+import 'package:more_devs_do_zero/shared/widgets/app_icon_button_shop_cart.dart';
 import 'package:more_devs_do_zero/shared/widgets/app_tittle_row_product.dart';
 import 'package:provider/provider.dart';
 import 'package:skeletonizer/skeletonizer.dart';
@@ -38,6 +39,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        actions: [IconButtonShopCart()],
         title: Consumer<LoginController>(
           builder: (context, loginController, child) {
             return Text(

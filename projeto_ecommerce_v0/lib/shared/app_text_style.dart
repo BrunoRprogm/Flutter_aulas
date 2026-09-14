@@ -6,7 +6,7 @@ class AppTextStyle {
   static const TextStyle title = TextStyle(
     color: AppColors.black,
     fontSize: 24,
-    fontWeight: FontWeight.bold,
+    fontWeight: FontWeight.w600,
   );
 
   static const TextStyle titleProduct = TextStyle(

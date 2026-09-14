@@ -14,7 +14,6 @@ class SignupPage extends StatefulWidget {
   @override
   State<SignupPage> createState() => _SignupPageState();
 }
-//class _LoginPageState extends State<LoginPage>
 
 class _SignupPageState extends State<SignupPage> {
   singUpController singupcontroller = singUpController();

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:more_devs_do_zero/features/cart/controller/cart_controller.dart';
 import 'package:more_devs_do_zero/features/home/controller/home_controller.dart';
 import 'package:more_devs_do_zero/features/home/controller/products_by_category_page_controller.dart';
 import 'package:more_devs_do_zero/features/login/controllers/login_controller.dart';
@@ -30,6 +31,7 @@ class MyApp extends StatelessWidget {
             return HomeController();
           },
         ),
+        ChangeNotifierProvider(create: ((context) => CartController())),
       ],
       builder: (context, child) {
         return MaterialApp(

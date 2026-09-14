@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:more_devs_do_zero/features/home/models/product_model.dart';
 import 'package:more_devs_do_zero/features/home/controller/products_by_category_page_controller.dart';
 import 'package:more_devs_do_zero/features/home/widgets/product_card.dart';
+import 'package:more_devs_do_zero/shared/widgets/app_icon_button_shop_cart.dart';
 import 'package:provider/provider.dart';
 
 class ProductsByCategoryPage extends StatefulWidget {
@@ -30,12 +31,7 @@ class _ProductsByCategorypageState extends State<ProductsByCategoryPage> {
       appBar: AppBar(
         title: Text(widget.categoryName),
         centerTitle: true,
-        actions: [
-          IconButton(
-            icon: Icon(Icons.shopping_cart_checkout_outlined),
-            onPressed: () {},
-          ),
-        ],
+        actions: [IconButtonShopCart()],
       ),
       body: Consumer<ProductsByCategoryPageController>(
         builder: (context, controller, _) {

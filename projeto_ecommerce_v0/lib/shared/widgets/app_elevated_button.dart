@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:more_devs_do_zero/shared/app_colors.dart';
 import 'package:more_devs_do_zero/shared/app_text_style.dart';
 
-enum ButtonType { filled, outlined }
+enum ButtonType { filled, outlined, small }
 
 class AppElevatedButton extends StatelessWidget {
   const AppElevatedButton({
@@ -39,6 +39,16 @@ class AppElevatedButton extends StatelessWidget {
           foregroundColor: AppColors.black,
           textStyle: AppTextStyle.buttonLabel,
           minimumSize: Size.fromHeight(40),
+        );
+
+      case ButtonType.small:
+        return ElevatedButton.styleFrom(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadiusGeometry.circular(12),
+          ),
+          backgroundColor: AppColors.black,
+          foregroundColor: AppColors.grey100,
+          fixedSize: Size(175, 43),
         );
     }
   }

@@ -16,9 +16,23 @@ class ProductCart extends Product {
     required this.quantity,
   });
 
+  factory ProductCart.fromProduct(Product produto) {
+    return ProductCart(
+      name: produto.name,
+      imageUrl: produto.imageUrl,
+      brand: produto.brand,
+      price: produto.price,
+      category: produto.category,
+      description: produto.description,
+      quantity: 1,
+    );
+  }
+
   final int quantity;
 }
 
 class CartController extends ChangeNotifier {
   List<ProductCart> itemCarrinho = [];
+
+  get itemcarrinho => 2;
 }

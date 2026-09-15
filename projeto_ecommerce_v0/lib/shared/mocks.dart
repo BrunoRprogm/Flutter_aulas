@@ -9,6 +9,11 @@ final List<Map<String, dynamic>> categoriesJson = [
     'name': 'Importados',
     'imageUrl': 'https://i.postimg.cc/Yq4fHQ6w/Image-2.png',
   },
+  {'name': 'Teste', 'imageUrl': 'https://i.postimg.cc/Yq4fHQ6w/Image-2.png'},
+  {
+    'name': 'Com desconto',
+    'imageUrl': 'https://i.postimg.cc/Yq4fHQ6w/Image-2.png',
+  },
 ];
 
 final List<Map<String, dynamic>> productsJson = [

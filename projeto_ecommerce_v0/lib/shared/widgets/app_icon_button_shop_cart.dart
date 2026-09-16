@@ -30,7 +30,10 @@ class IconButtonShopCart extends StatelessWidget {
                   replacement: Container(
                     height: 10,
                     width: 10,
-                    color: Colors.amber,
+                    decoration: BoxDecoration(
+                      color: const Color.fromARGB(255, 247, 247, 246),
+                      borderRadius: BorderRadius.circular(5),
+                    ),
                   ),
                   visible: controller.itemcarrinho > 0,
                   child: Positioned(
@@ -43,14 +46,14 @@ class IconButtonShopCart extends StatelessWidget {
                         borderRadius: BorderRadius.circular(13),
                       ),
                       constraints: const BoxConstraints(
-                        minWidth: 16,
-                        maxWidth: 16,
+                        minWidth: 18,
+                        maxWidth: 18,
                       ),
                       child: Text(
                         '${controller.itemcarrinho}',
                         style: const TextStyle(
                           color: Colors.white,
-                          fontSize: 15,
+                          fontSize: 12,
                         ),
                         textAlign: TextAlign.center,
                       ),

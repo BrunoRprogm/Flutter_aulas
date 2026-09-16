@@ -34,5 +34,5 @@ class ProductCart extends Product {
 class CartController extends ChangeNotifier {
   List<ProductCart> itemCarrinho = [];
 
-  get itemcarrinho => 2;
+  get itemcarrinho => 0;
 }

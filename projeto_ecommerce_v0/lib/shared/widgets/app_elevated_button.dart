@@ -28,7 +28,7 @@ class AppElevatedButton extends StatelessWidget {
           backgroundColor: AppColors.black,
           foregroundColor: AppColors.white,
           textStyle: AppTextStyle.buttonLabel,
-          minimumSize: Size.fromHeight(40),
+          fixedSize: Size.fromHeight(40),
         );
       case ButtonType.outlined:
         return ElevatedButton.styleFrom(
@@ -38,7 +38,7 @@ class AppElevatedButton extends StatelessWidget {
           backgroundColor: AppColors.white,
           foregroundColor: AppColors.black,
           textStyle: AppTextStyle.buttonLabel,
-          minimumSize: Size.fromHeight(40),
+          fixedSize: Size.fromHeight(40),
         );
 
       case ButtonType.small:

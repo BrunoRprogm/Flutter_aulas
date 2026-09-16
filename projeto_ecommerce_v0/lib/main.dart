@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
             return HomeController();
           },
         ),
-        ChangeNotifierProvider(create: ((context) => ProductCart())),
+        ChangeNotifierProvider(create: ((context) => CartController())),
       ],
       builder: (context, child) {
         return MaterialApp(

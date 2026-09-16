@@ -67,6 +67,12 @@ class AppTextStyle {
     fontWeight: FontWeight.bold,
   );
 
+  static const TextStyle priceProduct3 = TextStyle(
+    color: Color.fromARGB(255, 1, 1, 1),
+    fontSize: 24,
+    fontWeight: FontWeight.bold,
+  );
+
   static const TextStyle priceProduct2 = TextStyle(
     color: Color.fromARGB(255, 13, 13, 13),
     fontSize: 32,

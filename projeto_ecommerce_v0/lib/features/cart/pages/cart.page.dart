@@ -17,29 +17,97 @@ class CartPage extends StatefulWidget {
   State<CartPage> createState() => _CartPageState();
 }
 
+final product = Product.fromJson(productsJson.first);
+
 class _CartPageState extends State<CartPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        centerTitle:
-            true, // Propriedade do próprio appBar que centraliza o Tittle
+        centerTitle: true,
         title: Text('Carinho', style: AppTextStyle.title),
       ),
       body: SafeArea(
-        child: Consumer<ProductCart>(
+        child: Consumer<CartController>(
           builder: (context, value, child) {
-            return Center(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+            return Padding(
+              padding: EdgeInsetsGeometry.directional(top: 45),
+              child: Column(
                 children: [
-                  Container(
-                    width: 350,
-                    height: 130,
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.black, width: 2.5),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        width: 385,
+                        height: 128,
+                        padding: EdgeInsets.fromLTRB(6, 10, 6, 10),
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.black, width: 1.5),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Row(
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(8),
+                              child: Image.network(
+                                product.imageUrl,
+                                height: 108,
+                                width: 108,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                            Expanded(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        ' ${product.name}',
+                                        style: AppTextStyle.productName,
+                                      ),
+                                      Text(
+                                        'R\$${product.price}',
+                                        style: AppTextStyle.priceProduct3,
+                                      ),
+                                    ],
+                                  ),
+                                  Text(
+                                    '  ${product.brand}',
+                                    style: AppTextStyle.smallGrey,
+                                  ),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      AppElevatedButton(
+                                        onPressed: () {},
+                                        type: ButtonType.filled,
+                                        label: '-',
+                                      ),
+                                      SizedBox(width: 10),
+                                      Text(
+                                        ' 1 ',
+                                        style: AppTextStyle.priceProduct2,
+                                      ),
+                                      SizedBox(width: 10),
+                                      AppElevatedButton(
+                                        onPressed: () {},
+                                        type: ButtonType.filled,
+                                        label: '+',
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
@@ -48,19 +116,30 @@ class _CartPageState extends State<CartPage> {
         ),
       ),
       bottomNavigationBar: SafeArea(
-        child: Padding(
-          padding: EdgeInsetsGeometry.fromLTRB(16, 0, 16, 6),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              AppElevatedButton(
-                onPressed: () {},
-                type: ButtonType.small,
-                label: 'Continuar',
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Divider(thickness: 1, color: const Color.fromARGB(255, 0, 0, 0)),
+            Padding(
+              padding: EdgeInsetsGeometry.fromLTRB(16, 0, 16, 6),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Text(
+                    'R\$${product.price}',
+                    style: AppTextStyle.priceProduct2,
+                  ),
+                  SizedBox(width: 80),
+                  AppElevatedButton(
+                    onPressed: () {},
+                    type: ButtonType.small,
+                    label: 'Continuar',
+                  ),
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

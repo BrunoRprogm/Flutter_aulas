@@ -23,11 +23,20 @@ class CategoryCard extends StatelessWidget {
         children: [
           SizedBox(
             height: 76,
+            width: 76,
             child: Skeleton.replace(
-              replacement: Bone.circle(size: 50),
+              replacement: Bone.circle(size: 76),
               width: 76,
               height: 76,
-              child: Image.network(category.imageUrl),
+              child: ClipOval(
+                // Deixa as imagens redondas
+                child: Image.network(
+                  category.imageUrl,
+                  width: 76,
+                  height: 76,
+                  fit: BoxFit.cover, //preenche o circluo
+                ),
+              ),
             ),
           ),
           Text(category.name, style: AppTextStyle.smallBlack),

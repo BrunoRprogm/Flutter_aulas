@@ -104,11 +104,10 @@ class ProductCard extends StatelessWidget {
                   ),
                   SizedBox(height: 4),
                   Text(
-                    'R\$${value.totalPrice.toStringAsFixed(2)}',
+                    'R\$${product.price.toStringAsFixed(2)}',
                     style: AppTextStyle.priceProduct2,
                   ),
                   SizedBox(height: 20),
-
                   if (!noCarrinho)
                     AppElevatedButton(
                       onPressed: () {

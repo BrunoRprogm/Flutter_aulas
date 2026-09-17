@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:more_devs_do_zero/features/cart/controller/cart_controller.dart';
+import 'package:more_devs_do_zero/features/cart/pages/cart_item_card_page.dart';
 import 'package:more_devs_do_zero/features/home/models/product_model.dart';
 import 'package:more_devs_do_zero/shared/app_colors.dart';
 import 'package:more_devs_do_zero/shared/app_text_style.dart';
@@ -60,88 +61,11 @@ class _CartPageState extends State<CartPage> {
             body: SafeArea(
               child: Padding(
                 padding: EdgeInsetsGeometry.directional(top: 45),
-                child: Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                          width: 385,
-                          height: 128,
-                          padding: EdgeInsets.fromLTRB(6, 10, 6, 10),
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.black, width: 1.5),
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: Row(
-                            children: [
-                              ClipRRect(
-                                borderRadius: BorderRadius.circular(8),
-                                child: Image.network(
-                                  product.imageUrl,
-                                  height: 108,
-                                  width: 108,
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                              Expanded(
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          ' ${product.name}',
-                                          style: AppTextStyle.productName,
-                                        ),
-                                        Text(
-                                          'R\$${value.totalPrice.toStringAsFixed(2)}',
-                                          style: AppTextStyle.priceProduct3,
-                                        ),
-                                      ],
-                                    ),
-                                    Text(
-                                      '  ${product.brand}',
-                                      style: AppTextStyle.smallGrey,
-                                    ),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
-                                      children: [
-                                        AppElevatedButton(
-                                          onPressed: () {
-                                            value.subtrair(itemNoCarrinho);
-                                          },
-                                          type: ButtonType.filled,
-                                          label: '-',
-                                        ),
-                                        SizedBox(width: 10),
-                                        Text(
-                                          '${itemNoCarrinho.quantity}',
-                                          style: AppTextStyle.priceProduct2,
-                                        ),
-                                        SizedBox(width: 10),
-                                        AppElevatedButton(
-                                          onPressed: () {
-                                            value.adicionar(itemNoCarrinho);
-                                          },
-                                          type: ButtonType.filled,
-                                          label: '+',
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
+                child: ListView.builder(
+                  itemCount: value.itemCarrinho.length,
+                  itemBuilder: (context, index) {
+                    return CartItemCard(item: value.itemCarrinho[index]);
+                  },
                 ),
               ),
             ),

@@ -22,41 +22,50 @@ class _RecoverPageState extends State<RecoverPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: SizedBox(
-            height:
-                MediaQuery.of(context).size.height -
-                MediaQuery.of(context).padding.top -
-                MediaQuery.of(context).padding.bottom,
-            child: Padding(
-              padding: const EdgeInsets.all(24),
-              child: Column(
-                children: [
-                  Text('Recuperar senha', style: AppTextStyle.title),
-                  AppTextField(
-                    hintText: 'email@dominio.com',
-                    onChanged: (value) {
-                      setState(() {
-                        recoverController.updateEmail(value);
-                      });
-                    },
-                  ),
-                  Spacer(),
-                  AppElevatedButton(
-                    label: 'Continuar',
-                    type: ButtonType.filled,
-                    onPressed: recoverController.isActiveButton
-                        ? () {
-                            AnimatedSnackBar.material(
-                              'Código enviado com sucesso',
-                              type: AnimatedSnackBarType.success,
-                              mobileSnackBarPosition:
-                                  MobileSnackBarPosition.bottom,
-                            ).show(context);
-                          }
-                        : null,
-                  ),
-                ],
+        child: AppBar(
+          centerTitle: true,
+          automaticallyImplyLeading: true,
+          backgroundColor: Colors.white,
+          elevation: 0,
+          flexibleSpace: SingleChildScrollView(
+            child: SizedBox(
+              height:
+                  MediaQuery.of(context).size.height -
+                  MediaQuery.of(context).padding.top -
+                  MediaQuery.of(context).padding.bottom,
+              child: Padding(
+                padding: const EdgeInsets.all(24),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+
+                  children: [
+                    Text('Recuperar senha', style: AppTextStyle.title),
+                    SizedBox(height: 18),
+                    AppTextField(
+                      hintText: 'email@dominio.com',
+                      onChanged: (value) {
+                        setState(() {
+                          recoverController.updateEmail(value);
+                        });
+                      },
+                    ),
+                    Spacer(),
+                    AppElevatedButton(
+                      label: 'Continuar',
+                      type: ButtonType.filled,
+                      onPressed: recoverController.isActiveButton
+                          ? () {
+                              AnimatedSnackBar.material(
+                                'Código enviado com sucesso',
+                                type: AnimatedSnackBarType.success,
+                                mobileSnackBarPosition:
+                                    MobileSnackBarPosition.bottom,
+                              ).show(context);
+                            }
+                          : null,
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

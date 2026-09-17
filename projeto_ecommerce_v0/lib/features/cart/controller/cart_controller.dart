@@ -34,7 +34,7 @@ class ProductCart extends Product {
 class CartController extends ChangeNotifier {
   List<ProductCart> itemCarrinho = [];
 
-  get itemcarrinho => 0;
+  get itemcarrinho => itemCarrinho.length;
 
   //este mano basicamente veirfica se um produto em especifico já está na lista
   void AddProduct(Product product) {

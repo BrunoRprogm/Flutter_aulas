@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:more_devs_do_zero/features/home/controller/home_controller.dart';
 import 'package:more_devs_do_zero/features/home/models/category_model.dart';
 import 'package:more_devs_do_zero/features/home/widgets/category_card.dart';
+import 'package:more_devs_do_zero/shared/app_text_style.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class CategoriesSection extends StatelessWidget {
@@ -28,18 +29,28 @@ class CategoriesSection extends StatelessWidget {
     final isLoading = state == CategoriesViewState.loading;
     final items = isLoading ? _fakeCategories : categories;
 
-    return Skeletonizer(
-      enabled: isLoading,
-      child: SizedBox(
-        height: 150,
-        child: ListView.builder(
-          itemCount: items.length,
-          scrollDirection: Axis.horizontal,
-          itemBuilder: (context, index) {
-            return CategoryCard(category: items[index]);
-          },
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10),
+          child: Text('Categorias', style: AppTextStyle.titleProduct),
         ),
-      ),
+        SizedBox(height: 14),
+        Skeletonizer(
+          enabled: isLoading,
+          child: SizedBox(
+            height: 150,
+            child: ListView.builder(
+              itemCount: items.length,
+              scrollDirection: Axis.horizontal,
+              itemBuilder: (context, index) {
+                return CategoryCard(category: items[index]);
+              },
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

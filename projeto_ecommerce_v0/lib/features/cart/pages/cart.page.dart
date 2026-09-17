@@ -30,6 +30,27 @@ class _CartPageState extends State<CartPage> {
 
       body: Consumer<CartController>(
         builder: (context, value, child) {
+          if (value.itemCarrinho.isEmpty) {
+            return Center(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.sentiment_dissatisfied,
+                    size: 140,
+                    color: Colors.grey,
+                  ),
+                  SizedBox(width: 120),
+                  Text(
+                    'Sem itens no carrinho.',
+                    style: AppTextStyle.titleProduct,
+                  ),
+                ],
+              ),
+            );
+          }
+
           final itemNoCarrinho = value.itemCarrinho.firstWhere(
             (item) => item.name == product.name,
             orElse: () => ProductCart.fromProduct(product),

@@ -47,7 +47,7 @@ class ProductsSection extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('Produtos', style: AppTextStyle.title),
+              Text('Produtos', style: AppTextStyle.titleProduct),
               Icon(Icons.chevron_right),
             ],
           ),

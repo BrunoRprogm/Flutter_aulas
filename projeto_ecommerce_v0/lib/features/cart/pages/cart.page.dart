@@ -27,120 +27,135 @@ class _CartPageState extends State<CartPage> {
         centerTitle: true,
         title: Text('Carinho', style: AppTextStyle.title),
       ),
-      body: SafeArea(
-        child: Consumer<CartController>(
-          builder: (context, value, child) {
-            return Padding(
-              padding: EdgeInsetsGeometry.directional(top: 45),
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                        width: 385,
-                        height: 128,
-                        padding: EdgeInsets.fromLTRB(6, 10, 6, 10),
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.black, width: 1.5),
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: Row(
-                          children: [
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(8),
-                              child: Image.network(
-                                product.imageUrl,
-                                height: 108,
-                                width: 108,
-                                fit: BoxFit.cover,
+
+      body: Consumer<CartController>(
+        builder: (context, value, child) {
+          final itemNoCarrinho = value.itemCarrinho.firstWhere(
+            (item) => item.name == product.name,
+            orElse: () => ProductCart.fromProduct(product),
+          );
+
+          return Scaffold(
+            body: SafeArea(
+              child: Padding(
+                padding: EdgeInsetsGeometry.directional(top: 45),
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          width: 385,
+                          height: 128,
+                          padding: EdgeInsets.fromLTRB(6, 10, 6, 10),
+                          decoration: BoxDecoration(
+                            border: Border.all(color: Colors.black, width: 1.5),
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: Row(
+                            children: [
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(8),
+                                child: Image.network(
+                                  product.imageUrl,
+                                  height: 108,
+                                  width: 108,
+                                  fit: BoxFit.cover,
+                                ),
                               ),
-                            ),
-                            Expanded(
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        ' ${product.name}',
-                                        style: AppTextStyle.productName,
-                                      ),
-                                      Text(
-                                        'R\$${product.price}',
-                                        style: AppTextStyle.priceProduct3,
-                                      ),
-                                    ],
-                                  ),
-                                  Text(
-                                    '  ${product.brand}',
-                                    style: AppTextStyle.smallGrey,
-                                  ),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    children: [
-                                      AppElevatedButton(
-                                        onPressed: () {},
-                                        type: ButtonType.filled,
-                                        label: '-',
-                                      ),
-                                      SizedBox(width: 10),
-                                      Text(
-                                        ' 1 ',
-                                        style: AppTextStyle.priceProduct2,
-                                      ),
-                                      SizedBox(width: 10),
-                                      AppElevatedButton(
-                                        onPressed: () {},
-                                        type: ButtonType.filled,
-                                        label: '+',
-                                      ),
-                                    ],
-                                  ),
-                                ],
+                              Expanded(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          ' ${product.name}',
+                                          style: AppTextStyle.productName,
+                                        ),
+                                        Text(
+                                          'R\$${value.totalPrice.toStringAsFixed(2)}',
+                                          style: AppTextStyle.priceProduct3,
+                                        ),
+                                      ],
+                                    ),
+                                    Text(
+                                      '  ${product.brand}',
+                                      style: AppTextStyle.smallGrey,
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                      children: [
+                                        AppElevatedButton(
+                                          onPressed: () {
+                                            value.subtrair(itemNoCarrinho);
+                                          },
+                                          type: ButtonType.filled,
+                                          label: '-',
+                                        ),
+                                        SizedBox(width: 10),
+                                        Text(
+                                          '${itemNoCarrinho.quantity}',
+                                          style: AppTextStyle.priceProduct2,
+                                        ),
+                                        SizedBox(width: 10),
+                                        AppElevatedButton(
+                                          onPressed: () {
+                                            value.adicionar(itemNoCarrinho);
+                                          },
+                                          type: ButtonType.filled,
+                                          label: '+',
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                ],
+                      ],
+                    ),
+                  ],
+                ),
               ),
-            );
-          },
-        ),
-      ),
-      bottomNavigationBar: SafeArea(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Divider(thickness: 1, color: const Color.fromARGB(255, 0, 0, 0)),
-            Padding(
-              padding: EdgeInsetsGeometry.fromLTRB(16, 0, 16, 6),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            ),
+            bottomNavigationBar: SafeArea(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text(
-                    'R\$${product.price}',
-                    style: AppTextStyle.priceProduct2,
+                  Divider(
+                    thickness: 1,
+                    color: const Color.fromARGB(255, 0, 0, 0),
                   ),
-                  SizedBox(width: 80),
-                  AppElevatedButton(
-                    onPressed: () {},
-                    type: ButtonType.small,
-                    label: 'Continuar',
+                  Padding(
+                    padding: EdgeInsetsGeometry.fromLTRB(16, 0, 16, 6),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Text(
+                          'R\$${value.totalPrice.toStringAsFixed(2)}',
+                          style: AppTextStyle.priceProduct2,
+                        ),
+                        SizedBox(width: 40),
+                        AppElevatedButton(
+                          onPressed: () {},
+                          type: ButtonType.small,
+                          label: 'Continuar',
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
             ),
-          ],
-        ),
+          );
+        },
       ),
     );
   }
